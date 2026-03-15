@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "urls")
+@Table(name = "short_url", schema = "urlshortener")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,15 +18,21 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "short_code", unique = true, nullable = false)
+    @Column(name = "short_code", nullable = false, unique = true)
     private String shortCode;
 
-    @Column(name = "long_url", nullable = false, columnDefinition = "TEXT")
-    private String longUrl;
+    @Column(name = "original_url", nullable = false)
+    private String originalUrl;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "expires_at")
+    private LocalDateTime expiresAt;
+
     @Column(name = "click_count", nullable = false)
     private Long clickCount;
+
+    @Column(name = "active", nullable = false)
+    private Boolean active;
 }
