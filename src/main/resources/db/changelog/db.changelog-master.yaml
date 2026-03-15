@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-short-url-table
+      author: rajeswari
+      changes:
+        - createTable:
+            schemaName: urlshortener
+            tableName: short_url
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: short_code
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: original_url
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: expires_at
+                  type: TIMESTAMP
+
+              - column:
+                  name: click_count
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
