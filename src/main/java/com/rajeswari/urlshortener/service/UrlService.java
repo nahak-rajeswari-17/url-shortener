@@ -1,5 +1,6 @@
 package com.rajeswari.urlshortener.service;
 
+import com.rajeswari.urlshortener.exception.UrlNotFoundException;
 import com.rajeswari.urlshortener.model.Url;
 import com.rajeswari.urlshortener.repository.UrlRepository;
 import com.rajeswari.urlshortener.util.Base62Encoder;
@@ -41,10 +42,10 @@ public class UrlService {
     public Url getOriginalUrl(String shortCode) {
 
         Url url = urlRepository.findByShortCode(shortCode)
-                .orElseThrow(() -> new RuntimeException("Short URL not found"));
+                .orElseThrow(() -> new UrlNotFoundException("Short URL not found"));
 
         urlRepository.incrementClickCount(shortCode);
 
         return url;
-}
+    }
 }

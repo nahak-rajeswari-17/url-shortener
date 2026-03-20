@@ -3,6 +3,8 @@ package com.rajeswari.urlshortener.controller;
 import com.rajeswari.urlshortener.dto.CreateShortUrlRequest;
 import com.rajeswari.urlshortener.dto.CreateShortUrlResponse;
 import com.rajeswari.urlshortener.service.UrlService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,7 @@ public class UrlController {
 
     @PostMapping
     public ResponseEntity<CreateShortUrlResponse> createShortUrl(
-            @RequestBody CreateShortUrlRequest request) {
+            @Valid@RequestBody CreateShortUrlRequest request) {
 
         String shortCode = urlService.createShortUrl(request.getOriginalUrl());
 

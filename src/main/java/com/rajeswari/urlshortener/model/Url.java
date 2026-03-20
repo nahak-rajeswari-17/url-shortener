@@ -31,8 +31,8 @@ public class Url {
     private LocalDateTime expiresAt;
 
     @Column(name = "click_count", nullable = false)
-    private Long clickCount;
+    private long clickCount;
 
     @Column(name = "active", nullable = false)
-    private Boolean active;
+    private boolean active;
 }
