@@ -7,6 +7,14 @@ public class Base62Encoder {
 
     public static String encode(long value) {
 
+        if (value < 0) {
+            throw new IllegalArgumentException("Value cannot be negative");
+        }
+
+        if (value == 0) {
+            return "0";
+        }
+
         StringBuilder shortCode = new StringBuilder();
 
         while (value > 0) {

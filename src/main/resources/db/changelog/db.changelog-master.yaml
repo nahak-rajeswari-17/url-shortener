@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1-create-short-url-table
+      id: 2
       author: rajeswari
       changes:
         - createTable:
@@ -18,7 +18,7 @@ databaseChangeLog:
                   name: short_code
                   type: VARCHAR(10)
                   constraints:
-                    nullable: false
+                    nullable: true
                     unique: true
 
               - column:

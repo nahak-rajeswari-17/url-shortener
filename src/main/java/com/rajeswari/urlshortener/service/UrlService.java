@@ -5,6 +5,7 @@ import com.rajeswari.urlshortener.repository.UrlRepository;
 import com.rajeswari.urlshortener.util.Base62Encoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -36,9 +37,14 @@ public class UrlService {
         return shortCode;
     }
 
+    @Transactional
     public Url getOriginalUrl(String shortCode) {
 
-        return urlRepository.findByShortCode(shortCode)
+        Url url = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new RuntimeException("Short URL not found"));
-    }
+
+        urlRepository.incrementClickCount(shortCode);
+
+        return url;
+}
 }

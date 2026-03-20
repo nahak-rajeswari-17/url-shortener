@@ -23,11 +23,11 @@ public class UrlController {
         String shortUrl = "http://localhost:8080/u/" + shortCode;
 
         CreateShortUrlResponse response =
-                CreateShortUrlResponse.builder()
-                        .originalUrl(request.getOriginalUrl())
-                        .shortUrl(shortUrl)
-                        .shortCode(shortCode)
-                        .build();
+            CreateShortUrlResponse.builder()
+                    .originalUrl(request.getOriginalUrl())
+                    .shortUrl(shortUrl)
+                    .shortCode(shortCode)
+                    .build();
 
         return ResponseEntity.ok(response);
     }
