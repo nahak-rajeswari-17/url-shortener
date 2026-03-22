@@ -20,7 +20,7 @@ public class UrlController {
     public ResponseEntity<CreateShortUrlResponse> createShortUrl(
             @Valid@RequestBody CreateShortUrlRequest request) {
 
-        String shortCode = urlService.createShortUrl(request.getOriginalUrl());
+        String shortCode = urlService.createShortUrl(request);
 
         String shortUrl = "http://localhost:8080/u/" + shortCode;
 

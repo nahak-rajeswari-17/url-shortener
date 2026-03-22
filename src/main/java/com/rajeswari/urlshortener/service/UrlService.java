@@ -1,5 +1,6 @@
 package com.rajeswari.urlshortener.service;
 
+import com.rajeswari.urlshortener.dto.CreateShortUrlRequest;
 import com.rajeswari.urlshortener.exception.UrlNotFoundException;
 import com.rajeswari.urlshortener.model.Url;
 import com.rajeswari.urlshortener.repository.UrlRepository;
@@ -16,14 +17,15 @@ public class UrlService {
 
     private final UrlRepository urlRepository;
 
-    public String createShortUrl(String originalUrl) {
+    public String createShortUrl(CreateShortUrlRequest request) {
 
         // Step 1: Save initial row (to generate ID)
         Url url = Url.builder()
-                .originalUrl(originalUrl)
+                .originalUrl(request.getOriginalUrl())
                 .createdAt(LocalDateTime.now())
                 .clickCount(0L)
                 .active(true)
+                .expiresAt(request.getExpiresAt())
                 .build();
 
         Url saved = urlRepository.save(url);
@@ -43,6 +45,15 @@ public class UrlService {
 
         Url url = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException("Short URL not found"));
+
+        if (!url.isActive()) {
+            throw new UrlNotFoundException("Short URL is inactive");
+        }
+
+        if (url.getExpiresAt() != null &&
+                url.getExpiresAt().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Short URL has expired");
+        }
 
         urlRepository.incrementClickCount(shortCode);
 
